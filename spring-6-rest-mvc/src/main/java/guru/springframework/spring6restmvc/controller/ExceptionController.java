@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 @ControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(NotFoundException.class)
+//    @ExceptionHandler(NotFoundException.class)
     public ResponseEntity handleNotFoundException(){
         return ResponseEntity.notFound().build();
     }
