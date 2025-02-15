@@ -25,9 +25,9 @@ public class CustomerController {
 
     @PatchMapping(CUSTOMER_PATH_ID)
     public ResponseEntity patchCustomerById(@PathVariable("customerId") UUID customerId,
-                                            @RequestBody CustomerDTO customerDTO){
+                                            @RequestBody CustomerDTO customer){
 
-        customerService.patchCustomerById(customerId, customerDTO);
+        customerService.patchCustomerById(customerId, customer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -42,19 +42,19 @@ public class CustomerController {
 
     @PutMapping(CUSTOMER_PATH_ID)
     public ResponseEntity updateCustomerByID(@PathVariable("customerId") UUID customerId,
-                                             @RequestBody CustomerDTO customerDTO){
+                                             @RequestBody CustomerDTO customer){
 
-        customerService.updateCustomerById(customerId, customerDTO);
+        customerService.updateCustomerById(customerId, customer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(CUSTOMER_PATH)
-    public ResponseEntity handlePost(@RequestBody CustomerDTO customerDTO){
-        CustomerDTO savedCustomerDTO = customerService.saveNewCustomer(customerDTO);
+    public ResponseEntity handlePost(@RequestBody CustomerDTO customer){
+        CustomerDTO savedCustomer = customerService.saveNewCustomer(customer);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", CUSTOMER_PATH + "/" + savedCustomerDTO.getId().toString());
+        headers.add("Location", CUSTOMER_PATH + "/" + savedCustomer.getId().toString());
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
@@ -66,7 +66,7 @@ public class CustomerController {
 
     @GetMapping(value = CUSTOMER_PATH_ID)
     public CustomerDTO getCustomerById(@PathVariable("customerId") UUID id){
-        return customerService.getCustomerById(id);
+        return customerService.getCustomerById(id).orElseThrow(NotFoundException::new);
     }
 
 }
