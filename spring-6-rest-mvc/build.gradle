@@ -32,6 +32,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final' // Or latest version
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final' // Or latest version
 }
 
 tasks.named('test') {
