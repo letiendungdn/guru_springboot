@@ -8,32 +8,40 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+/**
+ * Created by jt, Spring Framework Guru.
+ */
 @Service
 @Primary
 @RequiredArgsConstructor
 public class CustomerServiceJPA implements CustomerService {
-    private  final CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
     @Override
-    public CustomerDTO getCustomerById(UUID uuid) {
-        return null;
+    public Optional<CustomerDTO> getCustomerById(UUID uuid) {
+        return Optional.ofNullable(customerMapper
+                .customerToCustomerDto(customerRepository.findById(uuid).orElse(null)));
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
-        return List.of();
+        return customerRepository.findAll().stream()
+                .map(customerMapper::customerToCustomerDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public CustomerDTO saveNewCustomer(CustomerDTO customerDTO) {
+    public CustomerDTO saveNewCustomer(CustomerDTO customer) {
         return null;
     }
 
     @Override
-    public void updateCustomerById(UUID customerId, CustomerDTO customerDTO) {
+    public void updateCustomerById(UUID customerId, CustomerDTO customer) {
 
     }
 
@@ -43,7 +51,7 @@ public class CustomerServiceJPA implements CustomerService {
     }
 
     @Override
-    public void patchCustomerById(UUID customerId, CustomerDTO customerDTO) {
+    public void patchCustomerById(UUID customerId, CustomerDTO customer) {
 
     }
 }
