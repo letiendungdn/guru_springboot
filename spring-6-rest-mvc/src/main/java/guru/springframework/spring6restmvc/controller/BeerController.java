@@ -1,4 +1,3 @@
-
 package guru.springframework.spring6restmvc.controller;
 
 import guru.springframework.spring6restmvc.model.BeerDTO;
@@ -27,9 +26,9 @@ public class BeerController {
     private final BeerService beerService;
 
     @PatchMapping(BEER_PATH_ID)
-    public ResponseEntity updateBeerPatchById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beerDTO){
+    public ResponseEntity updateBeerPatchById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beer){
 
-        beerService.patchBeerById(beerId, beerDTO);
+        beerService.patchBeerById(beerId, beer);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -43,20 +42,22 @@ public class BeerController {
     }
 
     @PutMapping(BEER_PATH_ID)
-    public ResponseEntity updateById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beerDTO){
+    public ResponseEntity updateById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beer){
 
-        beerService.updateBeerById(beerId, beerDTO);
+        if( beerService.updateBeerById(beerId, beer).isEmpty()){
+            throw new NotFoundException();
+        }
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping(BEER_PATH)
-    public ResponseEntity handlePost(@RequestBody BeerDTO beerDTO){
+    public ResponseEntity handlePost(@RequestBody BeerDTO beer){
 
-        BeerDTO savedBeerDTO = beerService.saveNewBeer(beerDTO);
+        BeerDTO savedBeer = beerService.saveNewBeer(beer);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", BEER_PATH + "/" + savedBeerDTO.getId().toString());
+        headers.add("Location", BEER_PATH + "/" + savedBeer.getId().toString());
 
         return new ResponseEntity(headers, HttpStatus.CREATED);
     }
