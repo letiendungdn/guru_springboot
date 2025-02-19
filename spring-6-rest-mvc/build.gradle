@@ -41,6 +41,10 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     implementation 'org.mapstruct:mapstruct:1.5.3.Final' // Or latest version
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final' // Or latest version
+    implementation 'org.flywaydb:flyway-core:10.0.0'
+    implementation 'org.flywaydb:flyway-mysql:10.0.0'
+    testImplementation 'org.assertj:assertj-core:3.+' // Or latest version
+    testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
 }
 
 tasks.named('test') {
