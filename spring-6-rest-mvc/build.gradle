@@ -61,10 +61,32 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-test {
+// Integration Test Task (important!)
+tasks.register('integrationTest', Test) {
     useJUnitPlatform()
+    sourceSets.create('integration') {
+        java.srcDir 'src/integration/java'
+        resources.srcDir 'src/integration/resources'
+        compileClasspath += sourceSets.main.runtimeClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+    testClassesDir = file("$buildDir/classes/java/integrationTest")
+    classpath = sourceSets.integration.runtimeClasspath
+
+    // If using Spring profiles for integration tests:
+    // systemProperty "spring.profiles.active", "integration"
+
     jvmArgs([
-            "-javaagent:${configurations.testRuntimeClasspath.find { it.name.startsWith("byte-buddy-agent") }.absolutePath}",
+            "-javaagent:${configurations.integrationTestRuntimeClasspath.find { it.name.startsWith("byte-buddy-agent") }?.absolutePath}", // Make the path optional
             "-Xshare:off" // Disable CDS
     ])
+}
+tasks.named('check') {
+    dependsOn tasks.named('integrationTest')
+}
+
+// Ensure integration tests run after regular tests
+tasks.named('integrationTest') {
+    dependsOn tasks.named('test')
+    mustRunAfter tasks.named('test')
 }
