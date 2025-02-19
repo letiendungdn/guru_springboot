@@ -57,6 +57,7 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+    implementation 'com.opencsv:opencsv:5.9'
 }
 
 tasks.named('test') {
