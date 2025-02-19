@@ -34,17 +34,7 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.33'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine' // Exclude vintage engine if using JUnit 5
-    }
-    testImplementation 'org.mockito:mockito-core:5.+' // Or latest version
-    testImplementation 'org.mockito:mockito-junit-jupiter:5.+' // For Mockito annotations with JUnit 5
-    // If you need to mock beans in Spring context:
-    testImplementation 'org.mockito:mockito-inline:5.+' // For mocking final classes and methods (use with caution)
-
-    // Optional: For more readable assertions
-    testImplementation 'org.assertj:assertj-core:3.+' // Or latest version
-    testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -56,37 +46,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:mysql'
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+    testImplementation 'org.assertj:assertj-core:3.+' // Or latest version
+    testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-// Integration Test Task (important!)
-tasks.register('integrationTest', Test) {
-    useJUnitPlatform()
-    sourceSets.create('integration') {
-        java.srcDir 'src/integration/java'
-        resources.srcDir 'src/integration/resources'
-        compileClasspath += sourceSets.main.runtimeClasspath
-        runtimeClasspath += sourceSets.main.runtimeClasspath
-    }
-    testClassesDir = file("$buildDir/classes/java/integrationTest")
-    classpath = sourceSets.integration.runtimeClasspath
-
-    // If using Spring profiles for integration tests:
-    // systemProperty "spring.profiles.active", "integration"
-
-    jvmArgs([
-            "-javaagent:${configurations.integrationTestRuntimeClasspath.find { it.name.startsWith("byte-buddy-agent") }?.absolutePath}", // Make the path optional
-            "-Xshare:off" // Disable CDS
-    ])
-}
-tasks.named('check') {
-    dependsOn tasks.named('integrationTest')
-}
-
-// Ensure integration tests run after regular tests
-tasks.named('integrationTest') {
-    dependsOn tasks.named('test')
-    mustRunAfter tasks.named('test')
 }
