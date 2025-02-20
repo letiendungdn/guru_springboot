@@ -1,8 +1,5 @@
 package guru.springframework.spring6restmvc.controller;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,38 +18,8 @@ import java.util.stream.Collectors;
 public class CustomErrorController {
 
     @ExceptionHandler
-    public ResponseEntity<?> handleJPAViolations(TransactionSystemException exception) {
-        ResponseEntity.BodyBuilder responseEntity = ResponseEntity.badRequest();
-
-        Throwable cause = exception.getCause();
-        if (cause instanceof ConstraintViolationException) {
-            ConstraintViolationException ve = (ConstraintViolationException) cause;
-
-            List<Map<String, String>> errors = ve.getConstraintViolations().stream()
-                    .map(constraintViolation -> {
-                        Map<String, String> errMap = new HashMap<>();
-                        errMap.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
-                        return errMap;
-                    }).collect(Collectors.toList());
-
-            return responseEntity.body(errors);
-        }
-
-        if (cause != null && cause.getCause() instanceof ConstraintViolationException) {
-            ConstraintViolationException ve = (ConstraintViolationException) cause.getCause();
-
-            List<Map<String, String>> errors = ve.getConstraintViolations().stream()
-                    .map(constraintViolation -> {
-                        Map<String, String> errMap = new HashMap<>();
-                        errMap.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage());
-                        return errMap;
-                    }).collect(Collectors.toList());
-
-            return responseEntity.body(errors);
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Unexpected error occurred");
+    ResponseEntity handleJPAViolations(TransactionSystemException exception){
+        return ResponseEntity.badRequest().build();
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

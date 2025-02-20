@@ -40,7 +40,7 @@ public class BootstrapData implements CommandLineRunner {
     }
 
     private void loadCsvData() throws FileNotFoundException {
-        if (beerRepository.count() < 10) {
+        if (beerRepository.count() < 10){
             File file = ResourceUtils.getFile("classpath:csvdata/beers.csv");
 
             List<BeerCSVRecord> recs = beerCsvService.convertCSV(file);
@@ -59,24 +59,16 @@ public class BootstrapData implements CommandLineRunner {
                     default -> BeerStyle.PILSNER;
                 };
 
-                // Kiểm tra null cho row và count
-                Integer row = beerCSVRecord.getRow();
-                String upc = (row != null) ? row.toString() : "0"; // Nếu null, gán "0"
-
-                Integer count = beerCSVRecord.getCount();
-                int quantityOnHand = (count != null) ? count : 0; // Nếu null, gán 0
-
                 beerRepository.save(Beer.builder()
                         .beerName(StringUtils.abbreviate(beerCSVRecord.getBeer(), 50))
                         .beerStyle(beerStyle)
                         .price(BigDecimal.TEN)
-                        .upc(upc)
-                        .quantityOnHand(quantityOnHand)
+                        .upc(beerCSVRecord.getRow().toString())
+                        .quantityOnHand(beerCSVRecord.getCount())
                         .build());
             });
         }
     }
-
 
     private void loadBeerData() {
         if (beerRepository.count() == 0){
