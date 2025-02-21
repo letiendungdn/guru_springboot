@@ -1,3 +1,4 @@
+
 package guru.springframework.spring6restmvc.controller;
 
 import org.springframework.http.HttpStatus;
