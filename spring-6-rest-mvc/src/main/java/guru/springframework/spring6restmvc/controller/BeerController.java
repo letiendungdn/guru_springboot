@@ -72,7 +72,7 @@ public class BeerController {
                                    @RequestParam(name = "showInventory", required = false) Boolean showInventory,
                                    @RequestParam(name = "pageNumber", required = false) Integer pageNumber,
                                    @RequestParam(name = "pageSize", required = false) Integer pageSize) {
-        return beerService.listBeers(beerName, beerStyle, showInventory, pageSize);
+        return beerService.listBeers(beerName, beerStyle, showInventory, pageNumber, pageSize);
     }
 
 
