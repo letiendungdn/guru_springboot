@@ -3,7 +3,6 @@ package guru.springframework.spring6restmvc.controller;
 import guru.springframework.spring6restmvc.model.BeerDTO;
 import guru.springframework.spring6restmvc.model.BeerStyle;
 import guru.springframework.spring6restmvc.services.BeerService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -70,8 +69,10 @@ public class BeerController {
     @GetMapping(value = BEER_PATH)
     public List<BeerDTO> listBeers(@RequestParam(name = "beerName", required = false) String beerName,
                                    @RequestParam(name = "beerStyle", required = false) BeerStyle beerStyle,
-                                   @RequestParam(name = "showInventory", required = false) Boolean showInventory) {
-        return beerService.listBeers(beerName, beerStyle, showInventory);
+                                   @RequestParam(name = "showInventory", required = false) Boolean showInventory,
+                                   @RequestParam(name = "pageNumber", required = false) Integer pageNumber,
+                                   @RequestParam(name = "pageSize", required = false) Integer pageSize) {
+        return beerService.listBeers(beerName, beerStyle, showInventory, pageSize);
     }
 
 
