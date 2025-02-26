@@ -29,7 +29,7 @@ public class BeerController {
     private final BeerService beerService;
 
     @PatchMapping(BEER_PATH_ID)
-    public ResponseEntity updateBeerPatchById(@PathVariable("beerId")UUID beerId, @RequestBody @Valid BeerDTO beer){
+    public ResponseEntity updateBeerPatchById(@PathVariable("beerId")UUID beerId, @RequestBody BeerDTO beer){
 
         beerService.patchBeerById(beerId, beer);
 
@@ -69,8 +69,9 @@ public class BeerController {
 
     @GetMapping(value = BEER_PATH)
     public List<BeerDTO> listBeers(@RequestParam(name = "beerName", required = false) String beerName,
-                                   @RequestParam(name = "beerStyle", required = false) BeerStyle beerStyle) {
-        return beerService.listBeers(beerName, beerStyle);
+                                   @RequestParam(name = "beerStyle", required = false) BeerStyle beerStyle,
+                                   @RequestParam(name = "showInventory", required = false) Boolean showInventory) {
+        return beerService.listBeers(beerName, beerStyle, showInventory);
     }
 
 
