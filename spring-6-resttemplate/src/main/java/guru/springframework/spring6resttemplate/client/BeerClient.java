@@ -1,4 +1,3 @@
-
 package guru.springframework.spring6resttemplate.client;
 
 import guru.springframework.spring6resttemplate.model.BeerDTO;
@@ -19,4 +18,8 @@ public interface BeerClient {
     BeerDTO getBeerById(UUID beerId);
 
     BeerDTO createBeer(BeerDTO newDto);
+
+    BeerDTO updateBeer(BeerDTO beerDto);
+
+    void deleteBeer(UUID beerId);
 }
