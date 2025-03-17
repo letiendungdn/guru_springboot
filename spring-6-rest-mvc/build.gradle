@@ -51,6 +51,7 @@ dependencies {
     testImplementation 'org.assertj:assertj-core:3.+' // Or latest version
     testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
     implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
 tasks.named('test') {
