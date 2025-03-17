@@ -50,6 +50,7 @@ dependencies {
     implementation 'com.opencsv:opencsv:5.9'
     testImplementation 'org.assertj:assertj-core:3.+' // Or latest version
     testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
