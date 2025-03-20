@@ -52,6 +52,7 @@ dependencies {
     testImplementation 'net.bytebuddy:byte-buddy-agent:1.+'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 }
 
 tasks.named('test') {
