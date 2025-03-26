@@ -1,3 +1,4 @@
+
 package guru.springframework.spring6reactive.controllers;
 
 import guru.springframework.spring6reactive.model.BeerDTO;
@@ -15,6 +16,15 @@ class BeerControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
+
+    @Test
+    void testUpdateBeer() {
+        webTestClient.put()
+                .uri(BeerController.BEER_PATH_ID, 1)
+                .body(Mono.just(BeerRepositoryTest.getTestBeer()), BeerDTO.class)
+                .exchange()
+                .expectStatus().isNoContent();
+    }
 
     @Test
     void testCreateBeer() {

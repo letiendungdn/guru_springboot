@@ -1,3 +1,4 @@
+
 package guru.springframework.spring6reactive.controllers;
 
 import guru.springframework.spring6reactive.model.BeerDTO;
@@ -39,7 +40,7 @@ public class BeerController {
     Mono<ResponseEntity<Void>> updateExistingBeer(@PathVariable("beerId") Integer beerId,
                                                   @Validated @RequestBody BeerDTO beerDTO){
         return beerService.updateBeer(beerId, beerDTO)
-                .map(savedDto -> ResponseEntity.ok().build());
+                .map(savedDto -> ResponseEntity.noContent().build());
     }
 
 
