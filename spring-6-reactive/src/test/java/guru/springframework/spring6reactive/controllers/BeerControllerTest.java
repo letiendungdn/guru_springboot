@@ -1,3 +1,4 @@
+
 package guru.springframework.spring6reactive.controllers;
 
 import guru.springframework.spring6reactive.domain.Beer;
@@ -29,6 +30,19 @@ class BeerControllerTest {
                 .exchange()
                 .expectStatus()
                 .isNoContent();
+    }
+
+    @Test
+    @Order(4)
+    void testUpdateBeerBadRequest() {
+        Beer testBeer = BeerRepositoryTest.getTestBeer();
+        testBeer.setBeerStyle("");
+
+        webTestClient.put()
+                .uri(BeerController.BEER_PATH_ID, 1)
+                .body(Mono.just(testBeer), BeerDTO.class)
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 
     @Test
