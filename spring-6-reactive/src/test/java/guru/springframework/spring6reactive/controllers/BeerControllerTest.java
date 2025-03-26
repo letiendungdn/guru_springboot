@@ -1,4 +1,3 @@
-
 package guru.springframework.spring6reactive.controllers;
 
 import guru.springframework.spring6reactive.model.BeerDTO;
@@ -16,6 +15,15 @@ class BeerControllerTest {
 
     @Autowired
     WebTestClient webTestClient;
+
+    @Test
+    void testDeleteBeer() {
+        webTestClient.delete()
+                .uri(BeerController.BEER_PATH_ID, 1)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+    }
 
     @Test
     void testUpdateBeer() {
