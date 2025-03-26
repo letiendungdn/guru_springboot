@@ -1,4 +1,3 @@
-
 package guru.springframework.spring6reactive.controllers;
 
 import guru.springframework.spring6reactive.domain.Beer;
@@ -75,6 +74,14 @@ class BeerControllerTest {
                 .exchange()
                 .expectStatus().isCreated()
                 .expectHeader().location("http://localhost:8080/api/v2/beer/4");
+    }
+
+    @Test
+    @Order(1)
+    void testGetByIdNotFound() {
+        webTestClient.get().uri(BeerController.BEER_PATH_ID, 999)
+                .exchange()
+                .expectStatus().isNotFound();
     }
 
     @Test
