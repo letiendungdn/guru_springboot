@@ -1,3 +1,4 @@
+
 package guru.springframework.client;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,34 @@ class BeerClientImplTest {
 
     @Autowired
     BeerClient client;
+
+    @Test
+    void testGetBeerById() {
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        client.listBeerDtos()
+                .flatMap(dto -> client.getBeerById(dto.getId()))
+                .subscribe(byIdDto -> {
+                    System.out.println(byIdDto.getBeerName());
+                    atomicBoolean.set(true);
+                });
+
+        await().untilTrue(atomicBoolean);
+    }
+
+    @Test
+    void testGetBeerDto() {
+
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        client.listBeerDtos().subscribe(dto -> {
+            System.out.println(dto.getBeerName());
+            atomicBoolean.set(true);
+        });
+
+        await().untilTrue(atomicBoolean);
+    }
 
     @Test
     void testGetBeerJson() {
