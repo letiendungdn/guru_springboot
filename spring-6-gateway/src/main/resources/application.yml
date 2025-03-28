@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: spring-6-rest-mvc
+            uri: http://localhost:8081
+            predicates:
+              - Path=/api/v1/*
