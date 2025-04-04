@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 /**
  * Created by jt, Spring Framework Guru.
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CustomerMapper {
 
     CustomerDTO customerToCustomerDto(Customer customer);
