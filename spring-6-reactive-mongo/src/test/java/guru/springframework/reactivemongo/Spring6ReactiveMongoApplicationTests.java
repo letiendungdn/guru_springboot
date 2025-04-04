@@ -1,4 +1,4 @@
-package guru.springframework.spring6reactivemongo;
+package guru.springframework.reactivemongo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

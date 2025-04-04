@@ -1,4 +1,4 @@
-package guru.springframework.spring6reactivemongo;
+package guru.springframework.reactivemongo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
