@@ -10,6 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.MongoDBContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -19,8 +23,13 @@ import java.util.concurrent.atomic.AtomicReference;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
+@Testcontainers
 @SpringBootTest
 class BeerServiceImplTest {
+
+    @Container
+    @ServiceConnection
+    public static MongoDBContainer mongoDBContainer = new MongoDBContainer("mongo:latest");
 
     @Autowired
     BeerService beerService;
@@ -36,6 +45,21 @@ class BeerServiceImplTest {
     @BeforeEach
     void setUp() {
         beerDTO = beerMapper.beerToBeerDto(getTestBeer());
+    }
+
+    @Test
+    void testFindByBeerStyle() {
+        BeerDTO beerDto1 = getSavedBeerDto();
+        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
+
+        beerService.findByBeerStyle(beerDto1.getBeerStyle())
+                .subscribe(dto -> {
+                    System.out.println(dto.toString());
+                    atomicBoolean.set(true);
+                });
+
+        await().untilTrue(atomicBoolean);
+
     }
 
     @Test
