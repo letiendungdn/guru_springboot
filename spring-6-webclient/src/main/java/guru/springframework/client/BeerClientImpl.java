@@ -1,4 +1,3 @@
-
 package guru.springframework.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
