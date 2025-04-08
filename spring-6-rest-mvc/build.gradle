@@ -19,6 +19,10 @@ configurations {
     }
 }
 
+bootRun {
+    systemProperty 'spring.profiles.active', 'localmysql'
+}
+
 repositories {
     mavenCentral()
 }
@@ -57,4 +61,11 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+tasks.register('processResources') {
+    from sourceSets.main.resources
+    into "$buildDir/resources/main"
+    expand([
+            'jwt-uri': project.properties['jwt-uri'] ?: '' // Lấy giá trị từ gradle.properties hoặc rỗng nếu không có
+    ])
 }
