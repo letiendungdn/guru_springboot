@@ -57,15 +57,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+    implementation 'org.springdoc:springdoc-openapi-starter-common:2.0.2'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-tasks.register('processResources') {
-    from sourceSets.main.resources
-    into "$buildDir/resources/main"
-    expand([
-            'jwt-uri': project.properties['jwt-uri'] ?: '' // Lấy giá trị từ gradle.properties hoặc rỗng nếu không có
-    ])
 }
