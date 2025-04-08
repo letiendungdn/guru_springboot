@@ -1,11 +1,16 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
   cloud:
     gateway:
       routes:
         - id: spring-6-rest-mvc
           uri: http://localhost:8081
           predicates:
-            - Path=/api/v1/*
+            - Path=/api/v1/*/**
         - id: spring-6-reactive
           uri: http://localhost:8082
           predicates:
