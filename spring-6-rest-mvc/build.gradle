@@ -61,6 +61,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-common:2.0.2'
     testImplementation 'io.rest-assured:rest-assured'
     testImplementation 'com.atlassian.oai:swagger-request-validator-restassured:2.40.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
