@@ -32,6 +32,11 @@ compileJava {
     ]
 }
 
+// Move the ext block here, before the dependencies block
+ext {
+    logbookVersion = '3.8.0'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -59,9 +64,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
     implementation 'org.springdoc:springdoc-openapi-starter-common:2.0.2'
+    implementation "org.zalando:logbook-spring-boot-starter:$logbookVersion"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'io.rest-assured:rest-assured'
     testImplementation 'com.atlassian.oai:swagger-request-validator-restassured:2.40.0'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
 tasks.named('test') {
