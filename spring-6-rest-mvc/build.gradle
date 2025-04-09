@@ -35,6 +35,7 @@ compileJava {
 // Move the ext block here, before the dependencies block
 ext {
     logbookVersion = '3.8.0'
+    logstashLogbackEncoderVersion = '7.4'
 }
 
 dependencies {
@@ -66,6 +67,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-common:2.0.2'
     implementation "org.zalando:logbook-spring-boot-starter:$logbookVersion"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    implementation "org.zalando:logbook-logstash:${logbookVersion}"
     testImplementation 'io.rest-assured:rest-assured'
     testImplementation 'com.atlassian.oai:swagger-request-validator-restassured:2.40.0'
 }
