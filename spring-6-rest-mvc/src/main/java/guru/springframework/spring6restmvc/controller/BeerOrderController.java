@@ -1,4 +1,3 @@
-
 package guru.springframework.spring6restmvc.controller;
 
 import guru.springframework.spring6restmvc.entities.BeerOrder;
@@ -25,6 +24,12 @@ public class BeerOrderController {
     public static final String BEER_ORDER_PATH_ID = BEER_ORDER_PATH + "/{beerOrderId}";
 
     private final BeerOrderService beerOrderService;
+
+    @DeleteMapping(BEER_ORDER_PATH_ID)
+    public ResponseEntity<Void> deleteOrder(@PathVariable UUID beerOrderId) {
+        beerOrderService.deleteOrder(beerOrderId);
+        return ResponseEntity.noContent().build();
+    }
 
     @PutMapping(BEER_ORDER_PATH_ID)
     public ResponseEntity<BeerOrderDTO> updateOrder(@PathVariable UUID beerOrderId, @RequestBody BeerOrderUpdateDTO beerOrderUpdateDTO) {
